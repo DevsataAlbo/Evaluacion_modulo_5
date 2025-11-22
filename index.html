@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow - Gestión de Tareas Colaborativa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/estilos/style.css">
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Cargando...</span>
+        </div>
+        <p class="mt-3">Procesando...</p>
+    </div>
+
+    <!-- Contenedor de Notificaciones -->
+    <div id="notificaciones" class="notification-container"></div>
+
+    <!-- ============================================ -->
+    <!-- VISTA DE AUTENTICACIÓN (Login/Registro) -->
+    <!-- ============================================ -->
+    <div id="vista-auth" class="auth-container">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-5">
+                    <div class="card shadow-lg">
+                        <div class="card-body p-5">
+                            <div class="text-center mb-4">
+                                <h1 class="app-title">TaskFlow</h1>
+                                <p class="text-muted">Gestión de Tareas Colaborativa</p>
+                            </div>
+
+                            <!-- Formulario de Login -->
+                            <div id="formulario-login">
+                                <h4 class="text-center mb-4">Iniciar Sesión</h4>
+                                <form id="form-login">
+                                    <div class="mb-3">
+                                        <label for="login-email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="login-email" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="login-password" class="form-label">Contraseña</label>
+                                        <input type="password" class="form-control" id="login-password" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100 mb-3">Iniciar Sesión</button>
+                                </form>
+                                <div class="text-center">
+                                    <p class="mb-0">¿No tienes cuenta?
+                                        <a href="#" id="btn-mostrar-registro">Regístrate aquí</a>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Formulario de Registro -->
+                            <div id="formulario-registro" style="display: none;">
+                                <h4 class="text-center mb-4">Crear Cuenta</h4>
+                                <form id="form-registro">
+                                    <div class="mb-3">
+                                        <label for="registro-nombre" class="form-label">Nombre Completo</label>
+                                        <input type="text" class="form-control" id="registro-nombre" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="registro-email" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="registro-email" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="registro-password" class="form-label">Contraseña</label>
+                                        <input type="password" class="form-control" id="registro-password" required minlength="6">
+                                    </div>
+                                    <button type="submit" class="btn btn-success w-100 mb-3">Registrarse</button>
+                                </form>
+                                <div class="text-center">
+                                    <p class="mb-0">¿Ya tienes cuenta?
+                                        <a href="#" id="btn-mostrar-login">Inicia sesión aquí</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- VISTA DE DASHBOARD (Aplicación Principal) -->
+    <!-- ============================================ -->
+    <div id="vista-dashboard" style="display: none;">
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container-fluid">
+                <span class="navbar-brand">TaskFlow</span>
+                <div class="d-flex align-items-center">
+                    <span class="text-white me-3">Hola, <strong id="nombre-usuario"></strong></span>
+                    <button class="btn btn-outline-light btn-sm" id="btn-cerrar-sesion">Cerrar Sesión</button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid mt-4">
+            <!-- Estadísticas -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card stat-card">
+                        <div class="card-body text-center">
+                            <h3 class="stat-number text-primary" id="stat-total">0</h3>
+                            <p class="stat-label">Total Tareas</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stat-card">
+                        <div class="card-body text-center">
+                            <h3 class="stat-number text-secondary" id="stat-pendientes">0</h3>
+                            <p class="stat-label">Pendientes</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stat-card">
+                        <div class="card-body text-center">
+                            <h3 class="stat-number text-warning" id="stat-progreso">0</h3>
+                            <p class="stat-label">En Progreso</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card stat-card">
+                        <div class="card-body text-center">
+                            <h3 class="stat-number text-success" id="stat-completadas">0</h3>
+                            <p class="stat-label">Completadas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Barra de Progreso -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Progreso General</h5>
+                            <div class="progress" style="height: 30px;">
+                                <div id="barra-progreso" class="progress-bar bg-success" role="progressbar" style="width: 0%">0%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controles y Filtros -->
+            <div class="row mb-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row g-3">
+                                <div class="col-md-3">
+                                    <button class="btn btn-primary w-100" id="btn-nueva-tarea">
+                                        Nueva Tarea
+                                    </button>
+                                </div>
+                                <div class="col-md-3">
+                                    <button class="btn btn-success w-100" id="btn-cargar-tareas">
+                                        Cargar Tareas desde API
+                                    </button>
+                                </div>
+                                <div class="col-md-2">
+                                    <select class="form-select" id="filtro-estado">
+                                        <option value="todas">Todos los estados</option>
+                                        <option value="pendiente">Pendiente</option>
+                                        <option value="en-progreso">En Progreso</option>
+                                        <option value="completada">Completada</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <select class="form-select" id="filtro-prioridad">
+                                        <option value="todas">Todas las prioridades</option>
+                                        <option value="alta">Alta</option>
+                                        <option value="media">Media</option>
+                                        <option value="baja">Baja</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" id="filtro-buscar" placeholder="Buscar...">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lista de Tareas -->
+            <div class="row" id="lista-tareas">
+                <!-- Las tareas se renderizan aquí dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- MODAL: Nueva/Editar Tarea -->
+    <!-- ============================================ -->
+    <div class="modal fade" id="modalTarea" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-tarea-titulo">Nueva Tarea</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-tarea">
+                        <div class="mb-3">
+                            <label for="tarea-titulo" class="form-label">Título</label>
+                            <input type="text" class="form-control" id="tarea-titulo" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tarea-descripcion" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="tarea-descripcion" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tarea-prioridad" class="form-label">Prioridad</label>
+                            <select class="form-select" id="tarea-prioridad" required>
+                                <option value="alta">Alta</option>
+                                <option value="media" selected>Media</option>
+                                <option value="baja">Baja</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tarea-estado" class="form-label">Estado</label>
+                            <select class="form-select" id="tarea-estado" required>
+                                <option value="pendiente" selected>Pendiente</option>
+                                <option value="en-progreso">En Progreso</option>
+                                <option value="completada">Completada</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tarea-asignado" class="form-label">Asignar a</label>
+                            <select class="form-select" id="tarea-asignado" required>
+                                <!-- Se llena dinámicamente con usuarios -->
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" form="form-tarea">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+            crossorigin="anonymous"></script>
+    <script src="assets/scripts/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+{
+    "tareas": [
+        {
+            "id": 1,
+            "titulo": "Diseñar interfaz de usuario",
+            "descripcion": "Crear mockups y prototipos para la nueva aplicacion web",
+            "prioridad": "alta",
+            "estado": "en-progreso",
+            "fecha_creacion": "2025-01-15T10:00:00",
+            "fecha_vencimiento": "2025-01-25T18:00:00",
+            "asignado_a": "maria.garcia@empresa.com",
+            "etiquetas": ["diseño", "ui/ux", "prototipo"]
+        },
+        {
+            "id": 2,
+            "titulo": "Implementar API REST",
+            "descripcion": "Desarrollar endpoints para gestion de usuarios y tareas",
+            "prioridad": "alta",
+            "estado": "pendiente",
+            "fecha_creacion": "2025-01-16T09:30:00",
+            "fecha_vencimiento": "2025-01-30T17:00:00",
+            "asignado_a": "juan.perez@empresa.com",
+            "etiquetas": ["backend", "api", "desarrollo"]
+        },
+        {
+            "id": 3,
+            "titulo": "Configurar base de datos",
+            "descripcion": "Instalar y configurar MongoDB para el proyecto",
+            "prioridad": "alta",
+            "estado": "completada",
+            "fecha_creacion": "2025-01-10T08:00:00",
+            "fecha_vencimiento": "2025-01-15T12:00:00",
+            "fecha_completada": "2025-01-14T16:30:00",
+            "asignado_a": "carlos.lopez@empresa.com",
+            "etiquetas": ["database", "mongodb", "infraestructura"]
+        },
+        {
+            "id": 4,
+            "titulo": "Escribir documentacion tecnica",
+            "descripcion": "Documentar arquitectura y APIs del sistema",
+            "prioridad": "media",
+            "estado": "en-progreso",
+            "fecha_creacion": "2025-01-18T11:00:00",
+            "fecha_vencimiento": "2025-02-05T18:00:00",
+            "asignado_a": "ana.martinez@empresa.com",
+            "etiquetas": ["documentacion", "api", "arquitectura"]
+        },
+        {
+            "id": 5,
+            "titulo": "Realizar pruebas de integracion",
+            "descripcion": "Ejecutar suite de tests de integracion end-to-end",
+            "prioridad": "media",
+            "estado": "pendiente",
+            "fecha_creacion": "2025-01-20T10:00:00",
+            "fecha_vencimiento": "2025-02-10T17:00:00",
+            "asignado_a": "pedro.rodriguez@empresa.com",
+            "etiquetas": ["testing", "qa", "integracion"]
+        },
+        {
+            "id": 6,
+            "titulo": "Optimizar rendimiento",
+            "descripcion": "Mejorar tiempos de carga y optimizar consultas SQL",
+            "prioridad": "baja",
+            "estado": "pendiente",
+            "fecha_creacion": "2025-01-22T14:00:00",
+            "fecha_vencimiento": "2025-02-15T18:00:00",
+            "asignado_a": "juan.perez@empresa.com",
+            "etiquetas": ["optimizacion", "performance", "backend"]
+        }
+    ]
+}
