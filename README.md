@@ -7,8 +7,8 @@ Aplicación web completa para gestionar tareas de forma colaborativa, implementa
 Clona el repositorio:
 
 ```bash
-git clone [URL_DEL_REPOSITORIO]
-cd "Modulo 5/Tarea 10"
+git clone https://github.com/DevsataAlbo/Evaluacion_modulo_5.git
+cd "Evaluacion_modulo_5"
 ```
 
 ## Ejecutar en local
